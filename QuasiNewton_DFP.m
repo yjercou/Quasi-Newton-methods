@@ -72,7 +72,7 @@ while and(gnorm>=tol, and(niter <= maxiter, dx >= dxmin))
         pk1 = -Hk1*gnew;
         
         if(pk1'*gnew <= 0)
-            [tk1,~] = fminbnd(@(tk) iterbyDFP(tk,x,pk1),0,1.8);
+            [tk1,~] = fminbnd(@(tk) iterbyQuasiNewton(tk,x,pk1),0,1.8);
             xnew = x + tk1  *  pk1;
             pk = pk1;
         else
@@ -123,7 +123,7 @@ function frosen = iterbyGrad(alpha,A,B)
     frosen = Rosenbrock(xnew(1),xnew(2));
 end
 
-function frosen = iterbyDFP(tk,A,B)
+function frosen = iterbyQuasiNewton(tk,A,B)
     xnew = A + tk*B;
     frosen = Rosenbrock(xnew(1),xnew(2));
 end
